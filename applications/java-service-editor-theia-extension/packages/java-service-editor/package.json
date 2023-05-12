@@ -1,0 +1,35 @@
+{
+  "name": "@jse/java-service-editor",
+  "version": "10.15.0-305",
+  "files": [
+    "lib",
+    "data"
+  ],
+  "dependencies": {
+    "@theia/core": "1.37.0",
+    "@theia/filesystem": "1.37.0",
+    "@theia/keymaps": "1.37.0",
+    "@theia/plugin-ext": "1.37.0",
+    "@theia/workspace": "1.37.0",
+    "@delite/dlt-components": "1.5.1",
+    "jquery": "3.6.0",
+    "react-hook-form": "7.22.2",
+    "http-proxy": "^1.18.1",
+    "node-fetch": "^2.6.7",
+    "get-port": "~6.0.0",
+    "http-proxy-middleware": "^2.0.1"
+  },
+  "scripts": {
+    "prepare": "yarn run clean && yarn run build",
+    "clean": "rimraf lib src-gen",
+    "build": "tsc -b",
+    "watch": "tsc -w",
+    "test": "jest --config configs/jest.config.ts"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/java-service-frontend-module",
+      "backend": "lib/node/java-service-backend-module"
+    }
+  ]
+}

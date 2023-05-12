@@ -1,0 +1,14 @@
+{
+  "name": "java-service-editor-app-runner",
+  "version": "10.15.0-69",
+  "license": "see license in 'LICENSE' file",
+  "dependencies": {
+    "@jse/java-service-editor-app": "^10.15.0-69"
+  },
+  "scripts": {
+    "install-jse": "npm i @jse/java-service-editor-app@10.15.0-68",
+    "download:plugins": "yarn --cwd node_modules/@jse/java-service-editor-app theia:plugins",
+    "theia:plugins": "theia download:plugins",
+    "start": "yarn --cwd node_modules/@jse/java-service-editor-app start"
+  }
+}

@@ -1,0 +1,43 @@
+description = 'Software AG Java Service Editor'
+/*
+ * Root-project only configuration
+ */
+//apply from: 'settings/groups.gradle'
+//apply from: 'settings/sonar.gradle'
+
+//Init npmRootPath if it is not alredy added as parameter from Jenkins job conf
+// if (!project.rootProject.hasProperty("npmRootPath")) {
+//     ext.npmRootPath = "${project.rootDir}/nodejs"
+// }
+
+allprojects {
+	defaultTasks 'clean', 'build'
+	apply plugin: 'project-report'
+}
+
+
+task listrepos {
+    doLast {
+        println "Repositories:"
+        project.repositories.each { println "Name: " + it.name + "; url: " + it.url }
+   }
+}
+/*
+ * Build requirements
+ */
+buildscript {
+	ext {
+		bas = [
+			version : 'latest.integration',
+		]
+	}
+	dependencies {
+		classpath(
+			"org.gradle:gradle-node-plugin:2.2.4",
+			"com.softwareag.bas:bas-plugins-core:$bas.version",
+			"com.softwareag.bas:bas-plugins-sonar:$bas.version",
+			"com.softwareag.bas:bas-plugins-assembly:$bas.version"
+		)
+	}
+	configurations.classpath.resolutionStrategy.failOnVersionConflict() 
+}

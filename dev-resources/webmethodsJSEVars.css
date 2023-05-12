@@ -1,0 +1,105 @@
+:root {
+    /* 
+    * Delite colors 
+    */
+    --black-color: #000;
+    --white-color: #fff;
+    --shadow-color: #ccc;
+    --shadow-color-dark: #6f6f6f;
+    --shadow-color-light: #f2f2f2;
+    --border-color: #e5e5e5;
+    --divider-border-color: #ccc;
+    --action-icon-color: #666;
+    --error-color: #e0000e;
+    --warning-color: #ff801f;
+    --info-color: #1c8ce3;
+    --success-color: #a0b909;
+    --primary-blue: #1776BF;
+    --darker-blue: #14629F;
+    --debug-color: #19d2c7;
+    /*
+    * webmethods.io vars
+    */
+    --primary-color: var(--wmio-primary-color, #1776BF);
+    --primary-text-color: var(--wmio-primary-text-color, #333333);
+    --header-text-color: var(--wmio-header-text-color, #ffffff);
+    --link-text-color: var(--wmio-link-text-color, #808080);
+    --primary-button-bg-color: var(--wmio-primarybtn-bg-color, #1776bf);
+    --primary-button-text-color: var(--wmio-primarybtn-text-color, #fff);
+    --primary-button-border: var(--wmio-primarybtn-border-color, #1776bf);
+    --primary-button-border-radius: var(--wmio-primarybtn-border-radius, 0);
+    --secondary-button-bg-color: var(--wmio-secondarybtn-bg-color, #ffffff);
+    --secondary-button-text-color: var(--wmio-secondarybtn-text-color, #1776BF);
+    --secondary-button-border: var(--wmio-secondarybtn-border-color, #1776bf);
+    --secondary-button-border-radius: var(--wmio-secondarybtn-border-radius, 0);
+    /* 
+    * theia basic vars
+    */
+    --theia-errorForeground: var(--error-color, #be1100);
+    --theia-icon-foreground: var(--action-icon-color, #424242);
+    --theia-focusBorder: var(--primary-color, #0090f1);
+    --theia-textLink-foreground: var(--primary-color, #006ab1);
+    --theia-textLink-activeForeground: var(--darker-blue, #006ab1);
+    --theia-inputValidation-infoBorder: var(--info-color, #007acc);
+    --theia-inputValidation-warningBorder: var(--warning-color, #b89500);
+    --theia-inputValidation-errorBorder: var(--error-color, #be1100);
+    --theia-button-background: var(--primary-color, #007acc);
+    --theia-button-hoverBackground: var(--darker-blue, #0062a3);
+    --theia-button-secondaryForeground: #ffffff;
+    --theia-progressBar-background: var(--primary-color, #0e70c0);
+    --theia-editorError-foreground: var(--error-color, #e51400);
+    --theia-editorWarning-foreground: var(--warning-color, #bf8803);
+    --theia-editorInfo-foreground: var(--info-color, #75beff);
+    --theia-pickerGroup-foreground: var(--primary-color, #0066bf);
+    --theia-list-highlightForeground: var(--primary-color, #0066bf);
+    --theia-list-activeSelectionBackground: var(--primary-color, #0074e8);
+    --theia-list-activeSelectionForeground: var(--white-color, #ffffff);
+    --theia-list-focusBackground: #f2f2f2;
+    --theia-list-focusForeground: #333333;
+    --theia-list-highlightForeground: var(--primary-text-color, #0066bf);
+    --theia-list-hoverBackground: var(--white-color, #e8e8e8);
+    --theia-list-hoverForeground: #333333;
+    --theia-list-inactiveSelectionBackground: #f2f2f2;
+    --theia-list-inactiveSelectionForeground: #333333;
+    --theia-list-dropBackground: #f2f2f2;
+    --theia-list-errorForeground: var(--error-color, #b01011);
+    --theia-list-warningForeground: var(--warning-color, #855f00);
+    --theia-listFilterWidget-noMatchesOutline: var(--error-color, #be1100);
+    --theia-problemsErrorIcon-foreground: var(--error-color, #e51400);
+    --theia-problemsWarningIcon-foreground: var(--warning-color, #bf8803);
+    --theia-problemsInfoIcon-foreground: var(--info-color, #75beff);
+    --theia-editorOverviewRuler-errorForeground: rgba(224, 0, 14, 0.7);
+    --theia-editorOverviewRuler-warningForeground: var(--warning-color, #bf8803);
+    --theia-editorOverviewRuler-infoForeground: var(--info-color, #75beff);
+    /**
+    * some customizations
+    */
+    --theia-editor-inactiveSelectionBackground: #ADD6FF;
+    --theia-editor-selectionHighlightBackground: #ADD6FF;
+    /* --theia-activityBar-background: var(--primary-color, #ececec); */
+    --theia-activityBar-background: #1776bf;
+    --theia-activityBar-foreground: var(--white-color, #000000);
+    --theia-activityBar-inactiveForeground: var(--white-color, rgba(0, 0, 0, 0.4));
+    --theia-activityBarBadge-background: var(--primary-color, #007acc);
+    --theia-notificationsErrorIcon-foreground: var(--error-color, #e51400);
+    --theia-notificationsWarningIcon-foreground: var(--warning-color, #bf8803);
+    --theia-notificationsInfoIcon-foreground: var(--info-color, #75beff);
+    --theia-statusBar-debuggingBackground: #cc6633;
+    --theia-statusBar-debuggingForeground: #f5eaf5;
+    --theia-inputOption-activeBorder: rgba(0, 122, 204, 0);
+    --theia-inputOption-activeBackground: rgba(0, 144, 241, 0.2);
+    --theia-inputOption-activeForeground: #000000;
+    --theia-input-background: #ffffff;
+    --theia-input-foreground: var(#333333, #616161);
+    --theia-inputOption-activeBorder: var(--primary-color, #1776BF);
+    --theia-input-placeholderForeground: #767676;
+    --theia-inputValidation-infoBackground: #d6ecf2;
+    --theia-inputValidation-infoBorder: var(--info-color, #007acc);
+    --theia-inputValidation-warningBackground: #f6f5d2;
+    --theia-inputValidation-warningBorder: var(--warning-color, #b89500);
+    --theia-inputValidation-errorBackground: #f2dede;
+    --theia-inputValidation-errorBorder: var(--error-color, #be1100);
+    /* 
+    * theia vars
+    */
+}

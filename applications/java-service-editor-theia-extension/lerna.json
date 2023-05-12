@@ -1,0 +1,15 @@
+{
+  "packages": [
+    "packages/*",
+    "java-service-editor-app/*"
+  ],
+  "npmClient": "yarn",
+  "version": "0.0.0",
+  "lerna": "4.0.0",
+  "useWorkspaces": true,
+  "command": {
+    "run": {
+      "stream": true
+    }
+  }
+}

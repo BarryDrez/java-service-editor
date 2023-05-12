@@ -1,0 +1,17 @@
+{
+  "extends": "./configs/base.tsconfig.json",
+  "include": [],
+  "compilerOptions": {
+    "composite": true,
+    "allowJs": true,
+    "esModuleInterop": true
+  },
+  "references": [
+    {
+      "path": "packages/java-service-editor"
+    },
+    {
+      "path": "java-service-editor-app/browser"
+    }
+  ]
+}

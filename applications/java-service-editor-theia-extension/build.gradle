@@ -1,0 +1,122 @@
+import groovy.json.JsonSlurper
+
+// To do a full nuild of JSE (reinstalls node_modules, plugins, etc.)
+task compileApp(type:YarnTask) {
+
+  dependsOn "fullClean"
+  dependsOn "processLocalizationResources","copyJSELocalizationFiles"
+  dependsOn "prepareApp"
+  group = 'build'
+  description = "Full build Java service editor"
+
+  args = ['install']
+
+  doLast {
+    mkdir ("${projectDir}/java-service-editor-app/browser/lib/assets")
+    mkdir ("${projectDir}/java-service-editor-app/browser/lib/assets/i18n")
+    copy {
+        from ("${projectDir}/node_modules/@builtioflow/origin-shared-components/assets/i18n")
+        into ("${projectDir}/java-service-editor-app/browser/lib/assets/i18n")
+    }
+    println "Complete build..."
+  }
+}
+
+// To do a development (partial) of JSE (only builds the JSE and installs it)
+task prepareApp(type:YarnTask) {
+
+  group = 'build'
+  description = "Tell yarn to ignore engines"
+  
+  args = ['run', 'prepareB']
+
+  doLast {
+    println "Prepare build..."
+  }
+}
+
+task buildApp(type:YarnTask) {
+  dependsOn "compileApp"
+
+  group = 'build'
+  description = "Tell yarn to downloadPlugins"
+  //if download plugin fails, don't fail the build.
+  ignoreExitValue true
+
+  args = ['run', 'download:plugins']
+
+  doLast {
+    println "compileApp and then download:plugins"
+  }
+}
+
+// To do a development (partial) of JSE (only builds the JSE and installs it)
+task devBuildApp(type:YarnTask) {
+
+  dependsOn "devClean"
+  group = 'build'
+  description = "Development build Java service editor"
+
+  args = []
+
+  doLast {
+    println "Development build..."
+  }
+}
+
+task copyJSELocalizationFiles(type: Copy) {
+
+  dependsOn "processLocalizationResources"
+
+  from ("${buildDir}/l10n/bundle/en/build/l10n/Resources/")
+  into ("${projectDir}/packages/java-service-editor/data/i18n")
+  rename 'en.json', 'nls.en.json'
+
+  doLast {
+    println "copyJSELocalizationFiles..."
+  }
+}
+
+task devClean(type:Delete) {
+
+  description 'Deletes build, lib, src-gen and node_modules/java-service-editor folders'
+
+  delete file ("${projectDir}/yarn.lock")
+  delete file ("${projectDir}/package-lock.json")
+  delete file ("${projectDir}/src-gen")
+  delete file ("${projectDir}/lib")
+  delete file ("${projectDir}/node_modules/@jse/java-service-editor")
+  delete file ("${projectDir}/node_modules/@jse/java-service-editor-app")
+  delete file ("${projectDir}/packages/java-service-editor/lib")
+  delete file ("${projectDir}/packages/java-service-editor/node_modules")
+  delete file ("${projectDir}/java-service-editor-app/browser/lib")
+  delete file ("${projectDir}/java-service-editor-app/browser/node_modules")
+  delete file ("${projectDir}/java-service-editor-app/browser/src_gen")
+
+  doLast {
+    println "partial clean..."
+  }
+}
+
+task fullClean(type:Delete) {
+  description 'Deletes build, lib and node_modules folders and l10n files'
+
+  delete file ("${projectDir}/yarn.lock")
+  delete file ("${projectDir}/src-gen")
+  delete file ("${projectDir}/lib")
+  delete file ("${projectDir}/node_modules")
+  delete file ("${projectDir}/plugins")
+  delete file ("${projectDir}/packages/java-service-editor/lib")
+  delete file ("${projectDir}/packages/java-service-editor/node_modules")
+  delete file ("${projectDir}/java-service-editor-app/browser/lib")
+  delete file ("${projectDir}/java-service-editor-app/browser/node_modules")
+  delete file ("${projectDir}/java-service-editor-app/browser/src_gen")
+  delete file ("${projectDir}/build")
+  delete file ("${projectDir}/node_modules")
+  delete file ("${projectDir}/java-service-editor-app/browser/plugins")
+  delete file ("${projectDir}/packages/java-service-editor/data/i18n/*.*")
+
+  doLast {
+    println "full clean..."
+  }
+}

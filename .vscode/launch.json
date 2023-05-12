@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "Start Browser Backend",
+        "program": "${workspaceRoot}/src-gen/backend/main.js",
+        "cwd": "${workspaceRoot}",
+        "args": [
+          "--hostname=0.0.0.0",
+          "--port=3000",
+          "--no-cluster",
+          "--app-project-path=${workspaceRoot}",
+          "--plugins=local-dir:plugins",
+          "--hosted-plugin-inspect=9339"
+        ],
+        "env": {
+            "NODE_ENV": "development"
+        },
+        "sourceMaps": true,
+        "outFiles": [
+          "${workspaceRoot}/src-gen/backend/*.js",
+        "${workspaceRoot}/lib/**/*.js",
+        "${workspaceRoot}/packages/*/lib/**/*.js"
+        ],
+        "smartStep": true,
+        "internalConsoleOptions": "openOnSessionStart",
+        "outputCapture": "std"
+    },
+    {
+      "name": "Launch Browser Frontend",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000/",
+      "webRoot": "${workspaceRoot}"
+    },
+  ]
+}

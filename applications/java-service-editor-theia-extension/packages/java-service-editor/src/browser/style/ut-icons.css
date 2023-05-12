@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'ut-icons';
+  font-style: normal;
+  font-weight: normal;
+  src:  url('../fonts/ut/ut-icons.eot?sz3s10');
+  src:  url('../fonts/ut/ut-icons.eot?sz3s10#iefix') format('embedded-opentype'),
+    url('../fonts/ut/ut-icons.ttf?sz3s10') format('truetype'),
+    url('../fonts/ut/ut-icons.woff?sz3s10') format('woff'),
+    url('../fonts/ut/ut-icons.svg?sz3s10#ut-icons') format('svg');
+}
+
+[class^='ut-icon-'], [class*=' ut-icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'ut-icons' !important;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+  speak: none;
+  text-transform: none;
+
+  /* Better Font Rendering =========== */
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ut-icon-action-bar_io:before {
+  content: '\e900';
+}
+
+.ut-icon-action-bar_navigator:before {
+  content: '\e901';
+}
+
+.ut-icon-action-bar_run:before {
+  content: '\e902';
+}
+
+.ut-icon-action-bar_save:before {
+  content: '\e903';
+}
+
+.ut-icon-construct_if-else:before {
+  content: '\e904';
+}
+
+.ut-icon-construct_switch-case:before {
+  content: '\e905';
+}
+
+.ut-icon-construct_try-catch-finally:before {
+  content: '\e906';
+}
+
+.ut-icon-data-mapper_drop-value:before {
+  content: '\e907';
+}
+
+.ut-icon-data-mapper_insert-variable:before {
+  content: '\e908';
+}
+
+.ut-icon-data-mapper_map:before {
+  content: '\e909';
+}
+
+.ut-icon-data-mapper_set-variable:before {
+  content: '\e90a';
+}
+
+.ut-icon-data-mapper_transform-pipeline:before {
+  content: '\e90b';
+}
+
+.ut-icon-overflow-menu_add-comment:before {
+  content: '\e90c';
+}
+
+.ut-icon-overflow-menu_add-note:before {
+  content: '\e90d';
+}
+
+.ut-icon-run_input-values_string-table_insert-column-left:before {
+  content: '\e90e';
+}
+
+.ut-icon-run_input-values_string-table_insert-column-right:before {
+  content: '\e90f';
+}
+
+.ut-icon-run_input-values_string-table_insert-row-above:before {
+  content: '\e910';
+}
+
+.ut-icon-run_input-values_string-table_insert-row-below:before {
+  content: '\e911';
+}
+

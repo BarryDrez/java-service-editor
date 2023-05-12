@@ -1,0 +1,117 @@
+buildscript {
+	ext {
+		bas = [
+			version: 'latest.integration',
+		]
+	}
+	dependencies {
+		classpath(
+			"com.softwareag.bas:bas-plugins-core:${bas.version}",
+			"com.softwareag.bas:bas-plugins-l10n:${bas.version}",
+            "org.gradle:gradle-node-plugin:2.2.3",
+		)
+	}
+}
+
+subprojects {
+
+	apply plugin: 'bas-java'
+	apply plugin: 'bas-l10n'
+    
+	l10n {
+		databaseUrl = 'https://g11nva.eur.ad.sag/tamino/Vmsg-va03'
+		product = 'IS'
+		locales = 'en,ja'
+        version = "trunk"
+		useLocalizationCache = false
+    	bundleResourceId = "IS Java Service Editor"
+	}
+    assembleLanguagePack
+	apply plugin: "com.github.node-gradle.node"
+    node {
+        // Version of node to use.
+        version = '16.15.1'
+
+        // Base URL for fetching node distributions (change if you have a mirror).
+        // distBaseUrl = 'http://ifind.eur.ad.sag:9090/dist/'
+        distBaseUrl = 'https://nodejs.org/dist/'
+
+        // If true, it will download node using above parameters.
+        // If false, it will try to use globally installed node.
+        download = false
+
+        // // Set the work directory where node_modules should be located
+         nodeModulesDir = file("${project.projectDir}")
+
+        
+    }
+
+    clean{
+
+    }
+
+
+////////////////////////////////////////////
+///                                     ////
+///  WORKAROUND BELOW for https support ////
+///                                     ////
+////////////////////////////////////////////
+ 
+def l10nClazz = project.buildscript.classLoader.loadClass('com.softwareag.bas.l10n.internal.L10NCache')
+def expandoL10nCache = new ExpandoMetaClass(l10nClazz, true, false);
+expandoL10nCache.generateKey = { String id, boolean withLocale = true ->
+    def cacheKey = l10nExtension.databaseUrl.replaceAll("([A-z]+://)", "")
+    cacheKey = cacheKey.replace("/", "-")
+    cacheKey += "_" + l10nExtension.product
+    cacheKey += "_" + l10nExtension.version
+    cacheKey += "_" + id
+    if (withLocale) {
+        cacheKey += "_" + l10nExtension.localeCategories.sort().join('')
+    }
+    cacheKey
+}
+expandoL10nCache.initialize();
+ 
+ 
+def genLocResClazz = project.buildscript.classLoader.loadClass('com.softwareag.bas.l10n.tasks.GenerateLocalizationResources')
+def expandoGenerateLocalizationResources = new ExpandoMetaClass(genLocResClazz, true, false)
+expandoGenerateLocalizationResources.getDbCacheKey = { ->
+    StringBuilder cacheKey = new StringBuilder();
+    cacheKey.append(getDatabaseUrl().replaceAll("([A-z]+://)", "").replace('/', '-'))
+            .append('_')
+            .append(getProduct())
+            .append('_')
+            .append(getProductVersion());
+    return cacheKey.toString();
+}
+expandoGenerateLocalizationResources.initialize()
+ 
+ 
+def genEcLocResClazz = project.buildscript.classLoader.loadClass('com.softwareag.bas.l10n.tasks.GenerateEclipseFeatureLocalizationResources')
+def expandoGenerateEclipseFeatureLocalizationResources = new ExpandoMetaClass(genEcLocResClazz, true, false)
+expandoGenerateEclipseFeatureLocalizationResources.getDbCacheKey = { ->
+    StringBuilder cacheKey = new StringBuilder();
+    cacheKey.append(getFeatureDatabaseUrl().replaceAll("([A-z]+://)", "").replace('/', '-'))
+            .append('_')
+            .append(getFeatureProduct())
+            .append('_')
+            .append(getProductVersion());
+    return cacheKey.toString();
+}
+expandoGenerateEclipseFeatureLocalizationResources.initialize()
+ 
+ 
+def importLocResClazz = project.buildscript.classLoader.loadClass('com.softwareag.bas.l10n.tasks.ImportLocalizationResources')
+def expandoImportLocalizationResources = new ExpandoMetaClass(importLocResClazz, true, false)
+expandoImportLocalizationResources.getDbCacheKey = { ->
+    StringBuilder cacheKey = new StringBuilder();
+    cacheKey.append(getDatabaseUrl().replaceAll("([A-z]+://)", "").replace('/', '-'))
+            .append('_')
+            .append(getProduct())
+            .append('_')
+            .append(getProductVersion());
+    return cacheKey.toString();
+}
+expandoImportLocalizationResources.initialize()
+
+}

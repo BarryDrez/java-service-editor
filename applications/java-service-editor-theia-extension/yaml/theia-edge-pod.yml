@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-configmap
+data:
+  fileAccessControl.cnf: |
+    allowedWritePaths=/opt/softwareag/JSEWorkspace/**
+    allowedReadPaths=/opt/softwareag/JSEWorkspace/**
+    allowedDeletePaths=
+  settings.json: |
+    {
+      "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/libs/*.jar",
+      ]
+    }
+  launch.json: |
+    {
+      // Use IntelliSense to learn about possible attributes.
+      // Hover to view descriptions of existing attributes.
+      "version": "0.2.0",
+      "configurations": [
+        {
+            "type": "java",
+            "name": "Integration Server remote debug",
+            "request": "attach",
+            "hostName": "localhost",
+            "port": "10033",
+            "sourcePaths": [
+                "${workspaceFolder}/modules/adminapi-server/src"
+            ]
+        }
+      ]
+    }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: theia-edge
+  labels:
+    name: theia-edge
+spec:
+
+  restartPolicy: Never
+
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  - name: shared-lib
+    emptyDir: {}
+  - name: edge-config
+    configMap:
+      name: edge-configmap
+
+  containers:
+
+  - name: edge-container
+    image: iregistry.eur.ad.sag/origin/edge
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+    - name: shared-data
+      mountPath: /opt/softwareag/JSEWorkspace
+    - name: shared-lib
+      mountPath: /opt/softwareag/JSELibs
+    - name: edge-config
+      subPath: fileAccessControl.cnf
+      mountPath: /opt/softwareag/IntegrationServer/packages/WmPublic/config/fileAccessControl.cnf
+    command: ["/bin/sh"]
+    args: ["-c", "while [! -d /opt/softwareag/JSELibs ]; do sleep 1; done; cp /opt/softwareag/common/lib/wm-isclient.jar /opt/softwareag/JSELibs; cp /opt/softwareag/IntegrationServer/lib/wm-isserver.jar /opt/softwareag/JSELibs;  /opt/softwareag/IntegrationServer/bin/startContainer.sh;"]
+    ports:
+    - containerPort: 5555
+
+  - name: theia-container
+    image: theia2
+    imagePullPolicy: Never
+    volumeMounts:
+    - name: shared-data
+      mountPath: /home/project
+    - name: shared-lib
+      mountPath: /home/libs
+    - name: edge-config
+      subPath: settings.json
+      mountPath: /home/project/.theia/settings.json
+    - name: edge-config
+      subPath: launch.json
+      mountPath: /home/project/.theia/launch.json
+    command: ["/bin/sh", "-c"]
+    args: ["cd /home/sag/java-service-editor-app/browser; yarn start /home/project --hostname=0.0.0.0"]
+    ports:
+    - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: theia-edge-nodeport
+spec:
+  type: NodePort
+  selector:
+    name: theia-edge # label of the pod
+  ports:
+    - name: theia
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+      nodePort: 30001
+    - name: edge
+      protocol: TCP
+      port: 5555
+      targetPort: 5555
+      # By default and for convenience, the Kubernetes control plane will allocate a port from a range (default: 30000-32767)
+      nodePort: 30002
+  stdin_open: true 
+  tty: true

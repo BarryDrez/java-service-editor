@@ -1,0 +1,7 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/home/project/jars/wm-isclient.jar",
+        "/home/project/jars/wm-isserver.jar"
+    ]
+}
